@@ -1,11 +1,11 @@
 services:
   backend:
-    build: yosan-back
+    build: ../yosan-back
     container_name: yosan-symfony
     ports:
       - 9000:9000
     volumes:
-      - ./yosan-back:/var/www/html
+      - ../yosan-back:/var/www/html
     depends_on:
       db:
         condition: service_healthy
@@ -13,7 +13,7 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
 
   db:
-    image: postgres
+    image: postgres:16
     container_name: yosan_db
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -32,12 +32,12 @@ services:
       start_period: 30s
 
   frontend:
-    build: yosan-front
+    build: ../yosan-front
     container_name: yosan-node
     ports:
       - 5173:5173
     volumes:
-      - ./yosan-front:/app
+      - ../yosan-front:/app
 
 volumes:
   postgres_data:
